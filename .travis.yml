@@ -16,7 +16,7 @@ env:
   - TARGET="mips64el-unknown-linux-gnuabi64"
 
 before_install:
-  - cargo install cross
+  - command -v cargo 1>/dev/null || cargo install cross
 
 script:
   - cross build --target $TARGET --verbose --all
