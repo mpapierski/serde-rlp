@@ -1,13 +1,29 @@
 language: rust
 cache: cargo
-sudo: false
+sudo: required
+services: docker
+
 rust:
   - stable
   - beta
   - nightly
+
+env:
+  - TARGET="x86_64-unknown-linux-gnu"
+  - TARGET="mips-unknown-linux-gnu"
+  - TARGET="mips-unknown-linux-musl"
+  - TARGET="mips64-unknown-linux-gnuabi64"
+  - TARGET="mips64el-unknown-linux-gnuabi64"
+  - TARGET="mipsel-unknown-linux-gnu"
+  - TARGET="mipsel-unknown-linux-musl"
+
+before_install:
+  - cargo install cross
+
 script:
-  - cargo build --verbose --all
-  - cargo test --verbose --all
+  - cross build --target $TARGET --verbose --all
+  - cross test --target $TARGET --verbose --all
+
 matrix:
   allow_failures:
   - rust: nightly
