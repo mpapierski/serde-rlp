@@ -11,11 +11,9 @@ rust:
 env:
   - TARGET="x86_64-unknown-linux-gnu"
   - TARGET="mips-unknown-linux-gnu"
-  - TARGET="mips-unknown-linux-musl"
+  - TARGET="mipsel-unknown-linux-gnu"
   - TARGET="mips64-unknown-linux-gnuabi64"
   - TARGET="mips64el-unknown-linux-gnuabi64"
-  - TARGET="mipsel-unknown-linux-gnu"
-  - TARGET="mipsel-unknown-linux-musl"
 
 before_install:
   - cargo install cross
@@ -30,6 +28,8 @@ matrix:
   fast_finish: true
   include:
   - rust: stable
+    env:
+    before_install:
     script:
     - rustup component add rustfmt-preview
     - cargo fmt --all -- --check
